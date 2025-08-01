@@ -14,6 +14,7 @@ public class Test2 {
 
     private static final int MOVE_DEFAULT_NPC =10;
     private static final int MOVE_DEFAULT=20;
+    int highScore;
     JLabel time_label;
     int dist=0;
     JFrame frame;
@@ -98,16 +99,21 @@ public class Test2 {
         gameTimer =new javax.swing.Timer(20, e->{
            if(checkAccident){
                 gameTimer.stop();
-                new Restart(dist);
+                if(dist>highScore){
+                    highScore=dist;
+                }
+                new Restart(dist,highScore);
                 frame.dispose();
            }else{
                if(label[0].getY()==500){
                    label[0].setLocation(0,-1000);
-                   label2.setLocation(random.nextInt(100),label2.getY());
+                   label2.setLocation(random.nextInt(50),label2.getY());
                }else if(label[1].getY()==500){
                    label[1].setLocation(0,-1000);
+                   label3.setLocation(random.nextInt(30)+100,label3.getY());
                }else if(label[2].getY()==500){
                    label[2].setLocation(0,-1000);
+                   label4.setLocation(random.nextInt(30)+200,label4.getY());
                }
                dist+=MOVE_DEFAULT_NPC;
                label[0].setLocation(label[0].getX(),label[0].getY()+MOVE_DEFAULT_NPC);
@@ -115,14 +121,11 @@ public class Test2 {
                label[2].setLocation(label[2].getX(),label[2].getY()+MOVE_DEFAULT_NPC);
                distance.setText(String.valueOf(dist));
 
-               if(label[0].getY()+50 >= car.getY() && label[0].getY()<=car.getY()+145 && label[0].getX()+50>=car.getX()){
-                   System.out.println("Accident");
+               if(label[0].getY()+50 >= car.getY() && label[0].getY()<=car.getY()+145 && label2.getX()+50>=car.getX() && label2.getX()<=car.getX()+70){
                    checkAccident=true;
-               }else if(label[1].getY()+10>=car.getY() && car.getY()+145 >=label[1].getY() && label[1].getX()+200>=car.getX() && car.getX()+70>=label[1].getX()+100){
-                   System.out.println("Accident");
+               }else if(label[1].getY()+10>=car.getY() && car.getY()+145 >=label[1].getY() && label3.getX()+70>=car.getX() && car.getX()+70>=label3.getX()){
                    checkAccident=true;
-               }else if(label[2].getY()+20>=car.getY() && label[2].getY()<=car.getY()+145 && label[2].getX()+300>=car.getX() && car.getX()+70>=label[2].getX()+200 ){
-                   System.out.println("Accident");
+               }else if(label[2].getY()+20>=car.getY() && label[2].getY()<=car.getY()+145 && label4.getX()+70>=car.getX() && car.getX()+70>=label4.getX() ){
                    checkAccident=true;
                }
 
@@ -208,8 +211,8 @@ public class Test2 {
         }
     }
 
-    Test2() throws InterruptedException {
-
+    Test2(int highScore) throws InterruptedException {
+        this.highScore=highScore;
         time_label=new JLabel();
         time_label.setForeground(Color.YELLOW);
         time_label.setBounds(150,150,100,100);
@@ -233,17 +236,18 @@ public class Test2 {
 
         label2=new JLabel();
         label2.setBounds(0,0,50,50);
+//        System.out.println(label2.getY());
         label2.setBackground(Color.RED);
         label2.setOpaque(true);
 //        label2.setIcon(icon_road_2);
 
         label3=new JLabel();
-        label3.setBounds(100,0,100,10);
+        label3.setBounds(100,0,70,10);
         label3.setBackground(Color.RED);
         label3.setOpaque(true);
 
         label4=new JLabel();
-        label4.setBounds(200,0,100,20);
+        label4.setBounds(200,0,70,20);
         label4.setBackground(Color.RED);
         label4.setOpaque(true);
 
